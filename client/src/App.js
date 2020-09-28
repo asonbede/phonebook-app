@@ -29,7 +29,7 @@ const App = () => {
   // let isSearch = false;
   //handle search value
   const handleCheckPhoneBook = (event) => {
-    console.log(event.target.value, "targettttt");
+    console.log(event.target.value, "targetttttyyy");
     //const personObjCopy= [...persons]
     //setPersons(persons);
     const inputValue = event.target.value;

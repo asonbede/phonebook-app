@@ -3,6 +3,7 @@ import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
 import Notification from "./components/Notification";
+import PersonInfo from "./components/PersonInfo";
 //import axios from "axios";
 import personServices from "./servicies/persons";
 
@@ -15,6 +16,7 @@ const App = () => {
   const [searchedPersons, setsearchedPersons] = useState([]);
   const [isSearch, setisSearch] = useState(false);
   const [addMessage, setAddMessage] = useState(null);
+  const [personInfo, setPersonInfo] = useState(null);
 
   //fetch data(initial state of the application) from server using axios library
   useEffect(() => {
@@ -96,9 +98,9 @@ const App = () => {
     personServices
       .deletePerson(id)
       .then((returnedPersons) => {
-        //setPersons(persons.filter((person) => person.id !== id));
-        console.log(returnedPersons, "rrrrrtrtrtr");
-        setPersons(returnedPersons);
+        setPersons(persons.filter((person) => person.id !== id));
+        //console.log(returnedPersons, "rrrrrtrtrtr");
+        // setPersons(returnedPersons);
       })
       .catch((error) => {
         alert(`the note ${personNameNumber.name} was already deleted`);
@@ -112,8 +114,12 @@ const App = () => {
 
   //replace existing number with new number if name already exist in phone book
   const checkNameNumberSimilarity = () => {
-    const personNameNumberObj = persons.find((n) => n.name === newName);
+    console.log({ newName });
+    const personNameNumberObj = persons.find(
+      (n) => n.name.toLowerCase() === newName.toLowerCase()
+    );
     //const personNumber = personNameNumberObj.number;
+    console.log({ personNameNumberObj });
     const personId = personNameNumberObj.id;
     const confirmResult = window.confirm(
       `${newName} is already added to phonebook, replace the old number?`
@@ -126,10 +132,10 @@ const App = () => {
         .update(personId, changePerson)
         .then((returnedPerson) => {
           setPersons(
-            returnedPerson
-            // persons.map((person) =>
-            //   person.id !== personId ? person : returnedPerson
-            // )
+            //returnedPerson
+            persons.map((person) =>
+              person.id !== personId ? person : returnedPerson
+            )
           );
         })
         //display message on failure to change number
@@ -148,9 +154,28 @@ const App = () => {
   // console.log(isSearch, "tooooyyyuuuu");
   const phonebookArray = isSearch ? searchedPersons : persons;
 
+  //person info handler
+  const personInfoHandler = (id) => {
+    personServices
+      .getPersonInfo(id)
+      .then((returnedPersons) => {
+        //setPersons(persons.filter((person) => person.id !== id));
+        //console.log(returnedPersons, "rrrrrtrtrtr");
+        // setPersons(returnedPersons);
+        setPersonInfo(returnedPersons);
+        setTimeout(() => {
+          setPersonInfo(null);
+        }, 5000);
+      })
+      .catch((error) => {
+        alert(`person not found`);
+      });
+  };
+
   return (
     <div>
       <Notification message={addMessage} />
+      <PersonInfo personinfo={personInfo} />
       <h2>Phonebook</h2>
 
       <Filter value={searchValue} onChange={handleCheckPhoneBook} />
@@ -167,8 +192,9 @@ const App = () => {
       {phonebookArray.map((person, index) => (
         <Persons
           person={person}
-          key={index}
+          key={person.id}
           removePersonHandler={() => removePersonHandler(person.id)}
+          personInfoHandler={() => personInfoHandler(person.id)}
         />
       ))}
     </div>
@@ -176,3 +202,4 @@ const App = () => {
 };
 
 export default App;
+//https://phone-book-with-react-node.herokuapp.com/

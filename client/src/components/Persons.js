@@ -4,6 +4,7 @@ const Persons = (props) => {
     <p>
       {props.person.name} {props.person.number}
       <button onClick={props.removePersonHandler}>delete</button>
+      <button onClick={props.personInfoHandler}>info</button>
     </p>
   );
 };

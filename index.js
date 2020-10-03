@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const path = require("path");
-//require("dotenv").config();
+require("dotenv").config();
 const Phonebook = require("./models/books");
 
 let persons = [
@@ -116,7 +116,7 @@ app.post("/api/persons", (request, response, next) => {
       console.log({ saveedPerson });
       response.json(saveedPerson);
     })
-    .catch(next(error));
+    .catch((error) => next(error));
 
   // notes = notes.concat(note);
 

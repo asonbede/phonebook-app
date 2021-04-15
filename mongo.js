@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const mongoose = require("mongoose");
 
 // if (process.argv.length < 3) {
@@ -7,6 +8,7 @@ const mongoose = require("mongoose");
 //   process.exit(1);
 // }
 
+// eslint-disable-next-line no-undef
 const password = process.argv[2];
 
 const url = `mongodb+srv://bede:${password}@cluster0.jjcpx.mongodb.net/phone-book?retryWrites=true&w=majority`;
@@ -29,7 +31,7 @@ mongoose
     useFindAndModify: false,
     useCreateIndex: true,
   })
-  .then((result) => {
+  .then(() => {
     console.log("connected to MongoDB");
   })
   .catch((error) => {
@@ -79,7 +81,7 @@ if (process.argv.length < 4) {
       console.log(result, "yyuuuuoo");
       mongoose.connection.close();
     })
-    .catch((error) => {
+    .catch(() => {
       console.log("note not note saved");
     });
 }

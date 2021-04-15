@@ -151,7 +151,7 @@ const App = () => {
     }
   };
 
-  // console.log(isSearch, "tooooyyyuuuu");
+  // console.log(isSearch, "tooooyyyuuuu");hhhhhhhhhhhhhh
   const phonebookArray = isSearch ? searchedPersons : persons;
 
   //person info handler

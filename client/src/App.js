@@ -1,3 +1,10 @@
+//What this app can do
+//get a list of phone numbers and names and displays them
+//enables users to add phone numbers to the database
+//alerts the users if names they want to add already exist
+//prompts the user to replace already existing name with new numbers
+//displays personal information about a user
+
 import React, { useState, useEffect } from "react";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
